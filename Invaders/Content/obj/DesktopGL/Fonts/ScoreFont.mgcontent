@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Fonts/ScoreFont.spritefont</SourceFile>
+  <SourceTime>2022-06-29T17:01:59.0668586-04:00</SourceTime>
+  <DestFile>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/bin/DesktopGL/Fonts/ScoreFont.xnb</DestFile>
+  <DestTime>2022-07-04T16:07:38.7556404-04:00</DestTime>
+  <Importer>FontDescriptionImporter</Importer>
+  <ImporterTime>2018-12-08T11:35:54-05:00</ImporterTime>
+  <Processor>FontDescriptionProcessor</Processor>
+  <ProcessorTime>2018-12-08T11:35:54-05:00</ProcessorTime>
+  <Parameters>
+    <Key>PremultiplyAlpha</Key>
+    <Value>True</Value>
+  </Parameters>
+  <Parameters>
+    <Key>TextureFormat</Key>
+    <Value>Compressed</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput />
+</PipelineBuildEvent>

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32228.343
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Invaders", "Invaders\Invaders.csproj", "{336C8619-2F52-453E-AF36-206915ED5B12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "..\..\libraries\Engine\Engine.csproj", "{11B5C378-02F1-48F0-AA0C-B02476CD3512}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{336C8619-2F52-453E-AF36-206915ED5B12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{336C8619-2F52-453E-AF36-206915ED5B12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{336C8619-2F52-453E-AF36-206915ED5B12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{336C8619-2F52-453E-AF36-206915ED5B12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11B5C378-02F1-48F0-AA0C-B02476CD3512}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11B5C378-02F1-48F0-AA0C-B02476CD3512}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11B5C378-02F1-48F0-AA0C-B02476CD3512}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11B5C378-02F1-48F0-AA0C-B02476CD3512}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DD791D8B-6F2A-4D60-BCA1-2D6FCA266C15}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Profile>Reach</Profile>
+  <Platform>DesktopGL</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Fonts/Debug.spritefont</File>
+    <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Fonts/ScoreFont.spritefont</File>
+    <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Fonts/Title.spritefont</File>
+    <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Sprites/Barrier0.png</File>
+    <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Sprites/Barrier1.png</File>
+    <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Sprites/Barrier2.png</File>
+    <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Sprites/Barrier3.png</File>
+    <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Sprites/Enemy.png</File>
+    <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Sprites/PlayButton.png</File>
+    <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Sprites/Player.png</File>
+    <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Sprites/Projectile.png</File>
+  </SourceFiles>
+  <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+  </DestFiles>
+</SourceFileCollection>
