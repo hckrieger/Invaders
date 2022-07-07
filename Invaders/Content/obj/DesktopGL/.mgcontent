@@ -4,7 +4,11 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
+    <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Fonts/CountDown.spritefont</File>
+    <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Fonts/Credit.spritefont</File>
     <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Fonts/Debug.spritefont</File>
+    <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Fonts/Instructions.spritefont</File>
+    <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Fonts/Play.spritefont</File>
     <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Fonts/ScoreFont.spritefont</File>
     <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Fonts/Title.spritefont</File>
     <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Sprites/Barrier0.png</File>
@@ -17,6 +21,10 @@
     <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Sprites/Projectile.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

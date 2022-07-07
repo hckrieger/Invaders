@@ -18,6 +18,7 @@ namespace Invaders.GameObjects
         float startMovementTime, movementTimer;
         float projectileTimer;
         float startDeathDelay, deathDelay;
+        float startCountDownTimer, countDownTimer = 1f;
         List<Enemy[]> alienArrayColumns = new List<Enemy[]>();
         Point windowSize;
         bool movingDown = false;
@@ -26,10 +27,13 @@ namespace Invaders.GameObjects
         TextGameObject counterText = new TextGameObject("Fonts/Debug", 1, Color.White, TextGameObject.Alignment.Center);
         TextGameObject scoreFont = new TextGameObject("Fonts/ScoreFont", 1, Color.White);
         TextGameObject livesFont = new TextGameObject("Fonts/ScoreFont", 1, Color.White);
+        TextGameObject countDownFont = new TextGameObject("Fonts/CountDown", 1, Color.White, TextGameObject.Alignment.Center);
         int activeCount, targetNumber;
         int alienYPosition;
         bool alienBreach = false, earnedExtraLife = false;
         public int Lives { get; set; }
+        string[] readySetGo;
+        int readySetGoIndex = 0;
 
         public Aliens(Point windowSize)
         {
@@ -38,8 +42,9 @@ namespace Invaders.GameObjects
             counterText.LocalPosition = new Vector2(450, 100);
             scoreFont.LocalPosition = new Vector2(50, 10);
             livesFont.LocalPosition = new Vector2(windowSize.X - 100, 10);
-
-                
+            startCountDownTimer = countDownTimer;
+            readySetGo = new string[] { "Ready", "Set", "Go" };
+            countDownFont.LocalPosition = new Vector2(windowSize.X / 2, 300);
             Reset();
 
         }
@@ -51,7 +56,35 @@ namespace Invaders.GameObjects
             scoreFont.Text = $"Score\n  {MainScene.Score}";
             livesFont.Text = $"Lives\n   {Lives}";
 
-            counterText.Text = alienYPosition.ToString();
+            counterText.Text = MainScene.CurrentState.ToString();
+
+
+            if (MainScene.CurrentState == MainScene.State.CountDown)
+            {
+                if (!countDownFont.Visible)
+                {
+                    countDownFont.Visible = true;
+                }
+                
+
+                countDownTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (countDownTimer <= 0)
+                {
+                    readySetGoIndex++;
+                    if (readySetGoIndex < 3)
+                        countDownTimer = startCountDownTimer;
+                    else {
+                        readySetGoIndex = 0;
+                        countDownTimer = startCountDownTimer;
+                        countDownFont.Visible = false;
+                        MainScene.CurrentState = MainScene.State.Playing;
+                    }
+                } 
+
+              
+
+                countDownFont.Text = readySetGo[readySetGoIndex];
+            }
            
             //if gameplay is running then set the movement timer for aliens
             //makes it where aliens move in it's desired direction after a short time interval
@@ -79,6 +112,7 @@ namespace Invaders.GameObjects
                 }
             }
 
+            //Have aliens change horizontal direction when it touches left-right edge of screen
             if (alienArrayColumns.Count > 0)
             {
                 if (alienArrayColumns.First()[0].GlobalPosition.X <= 25 && xDirection < 0)
@@ -94,7 +128,7 @@ namespace Invaders.GameObjects
                 }
             }
 
-
+            //Speed the aliens up when you shoot more of them
             bool speedUp = false;
             if (activeCount < targetNumber && (activeCount % 5 == 0 && activeCount >= 5 ||
                 activeCount < 5))
@@ -114,18 +148,20 @@ namespace Invaders.GameObjects
                     
             }
 
+
+            //Make sure aliens don't move under a certain speed
             if (startMovementTime < .025f)
                 startMovementTime = .025f;
 
 
             var projectile = MainScene.Projectile;
-
             for (int x = 0; x < WIDTH; x++)
             {
                 for (int y = 0; y < HEIGHT; y++)
                 {
                     if (CollisionDetection.ShapesIntersect(projectile.BoundingBox, EnemyGrid[x, y].BoundingBox))
                     {
+                        //Increase the score by a certain amount depending on which row the alien was on when it was shot down
                         var index = EnemyGrid[x, y].Index;
                         switch (index % 5)
                         {
@@ -152,9 +188,12 @@ namespace Invaders.GameObjects
                         activeCount--;
                     }
 
+                    //If the aliens get past the barriers then you lose
                     if (EnemyGrid[x, y].BoundingBox.Bottom >= MainScene.Barriers[0].BoundingBox.Bottom)
                     {
                         alienBreach = true;
+                        if (MainScene.CurrentState != MainScene.State.Died && Lives > 0)
+                            Lives--;
                         MainScene.CurrentState = MainScene.State.Died;
 
                         break;
@@ -162,6 +201,8 @@ namespace Invaders.GameObjects
                 }
             }
 
+
+           
             if (alienArrayColumns.Count > 0 && MainScene.CurrentState == MainScene.State.Playing)
                 projectileTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -195,14 +236,16 @@ namespace Invaders.GameObjects
 
                 if (deathDelay <= 0)
                 {
+                    MainScene.CurrentState = MainScene.State.CountDown;
                     if (alienBreach)
                     {
                         Reset();
                         foreach (Barrier obj in MainScene.Barriers)
                             obj.Reset();
-                    }
+
                         
-                    MainScene.CurrentState = MainScene.State.Playing;
+                    } 
+
                     deathDelay = startDeathDelay;
                 }
             }
@@ -211,25 +254,31 @@ namespace Invaders.GameObjects
                 MainScene.CurrentState = MainScene.State.Lost;
             }
                 
-
+            //If there are no more aliens then you win
             if (activeCount == 0)
                 MainScene.CurrentState = MainScene.State.Won;
 
-            
+            //If the score goves over 1500 then get an extra life
             if (MainScene.Score >= 1500 && !earnedExtraLife)
             {
                 Lives++;
                 earnedExtraLife = true;
             }
+
+
         }
 
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
 
-            if (inputHelper.KeyPressed(Keys.Space) && 
-                (MainScene.CurrentState != MainScene.State.Playing) && 
-                ((MainScene.CurrentState != MainScene.State.Died && !alienBreach) || MainScene.CurrentState == MainScene.State.Died && alienBreach))
+            //if (inputHelper.KeyPressed(Keys.Space) && 
+            //    (MainScene.CurrentState != MainScene.State.Playing || 
+            //    (MainScene.CurrentState == MainScene.State.Died || MainScene.CurrentState == MainScene.State.Lost) && alienBreach))
+            if (inputHelper.KeyPressed(Keys.Space) &&
+                (MainScene.CurrentState == MainScene.State.Start || 
+                 MainScene.CurrentState == MainScene.State.Won ||
+                 MainScene.CurrentState == MainScene.State.Lost))
             {
                 Reset();
             }
@@ -243,9 +292,10 @@ namespace Invaders.GameObjects
                 for (int y = 0; y < HEIGHT; y++)
                     EnemyGrid[x, y].Draw(gameTime, spriteBatch);
 
-            //counterText.Draw(gameTime, spriteBatch);
+            counterText.Draw(gameTime, spriteBatch);
             scoreFont.Draw(gameTime, spriteBatch);
             livesFont.Draw(gameTime, spriteBatch);
+            countDownFont.Draw(gameTime, spriteBatch);
         }
 
         //Randomly selected alien that will shoot projectile
@@ -279,18 +329,15 @@ namespace Invaders.GameObjects
             if (MainScene != null)
             {
                 if (MainScene.CurrentState == MainScene.State.Lost || 
-                    MainScene.CurrentState == MainScene.State.Start ||
-                    (MainScene.CurrentState == MainScene.State.Died && alienBreach))
+                    MainScene.CurrentState == MainScene.State.Start)
                 {
                     
                     if (alienBreach)
                     {
-                        Lives--;
-                        alienBreach = false;
-                        goto SkipAhead;
+                        if (Lives > 0)
+                            goto SkipAhead;
                     }
                     {
-                        
                         Lives = 3;
                         alienYPosition = windowSize.Y - 525;
                         MainScene.Score = 0;
@@ -299,9 +346,9 @@ namespace Invaders.GameObjects
 
                     
                 }
-                else if (MainScene.CurrentState == MainScene.State.Won)
+                else if (MainScene.CurrentState == MainScene.State.Won && alienYPosition < windowSize.Y - 525)
                 {
-                    alienYPosition += 25;
+                    alienYPosition += 33;
                 }
             } else
             {
@@ -309,12 +356,17 @@ namespace Invaders.GameObjects
                 Lives = 3;
             }
             SkipAhead:
+
+            if (alienBreach)
+                alienBreach = false;
+
             LocalPosition = new Vector2(25, alienYPosition);
 
+            
             movementTimer = .95f;
             startMovementTime = movementTimer;
 
-            deathDelay = 2.5f;
+            deathDelay = 2f;
             startDeathDelay = deathDelay;
 
             activeCount = WIDTH * HEIGHT;
@@ -352,10 +404,10 @@ namespace Invaders.GameObjects
             }
 
             if (MainScene != null)
-                MainScene.CurrentState = MainScene.State.Playing;
+                MainScene.CurrentState = MainScene.State.CountDown;
         }
 
-        public bool AlienBreach => alienBreach;
+ 
 
         public MainScene MainScene => (MainScene)ExtendedGame.GameStateManager.GetGameState(Game1.SCENE_MAIN);
     }

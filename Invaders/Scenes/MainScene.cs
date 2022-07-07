@@ -13,6 +13,7 @@ namespace Invaders.Scenes
 
         public enum State
         {
+            CountDown,
             Start,
             Playing,
             Died,
@@ -36,7 +37,6 @@ namespace Invaders.Scenes
 
         public MainScene(Point windowSize)
         {
-            CurrentState = State.Start;
 
             player = new Player(windowSize);
             gameObjects.AddChild(player);

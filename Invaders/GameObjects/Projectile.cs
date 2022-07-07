@@ -37,22 +37,21 @@ namespace Invaders.GameObjects
                 MainScene.CurrentState == MainScene.State.Died || CollisionDetection.ShapesIntersect(CustomBox, MainScene.Player.CustomRectangle))
                 Active = false;
 
-            if (MainScene.CurrentState == MainScene.State.Lost ||
-                MainScene.CurrentState == MainScene.State.Won)
-                Reset();
+
 
             CustomBox = CustomBounds(new Rectangle(-1, 0, 12, 12));
 
-            velocity.Y = speed;
+            if (MainScene.CurrentState == MainScene.State.Playing)
+                velocity.Y = speed;
 
             if (runTimer && MainScene.CurrentState == MainScene.State.Playing)
                 timer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (timer <= 0)
+            if (timer <= 0 ||
+               (GlobalPosition.Y <= 55 || GlobalPosition.Y >= windowSize.Y) ||
+               (MainScene.CurrentState == MainScene.State.Lost || MainScene.CurrentState == MainScene.State.Won))
                 Reset();
 
-            if (GlobalPosition.Y <= 55 || GlobalPosition.Y >= windowSize.Y)
-                Reset();
 
         }
 
