@@ -15,9 +15,9 @@ namespace Invaders.GameObjects
         Enemy[,] EnemyGrid;
         const int WIDTH = 11;
         const int HEIGHT = 5;
-        float startMovementTime, movementTimer;
+        float startMovementTime, movementTimer = .95f;
         float projectileTimer;
-        float startDeathDelay, deathDelay;
+        float starttransitionDelay, transitionDelay = 2f;
         float startCountDownTimer, countDownTimer = 1f;
         List<Enemy[]> alienArrayColumns = new List<Enemy[]>();
         Point windowSize;
@@ -43,6 +43,8 @@ namespace Invaders.GameObjects
             scoreFont.LocalPosition = new Vector2(50, 10);
             livesFont.LocalPosition = new Vector2(windowSize.X - 100, 10);
             startCountDownTimer = countDownTimer;
+            startMovementTime = movementTimer;
+            starttransitionDelay = transitionDelay;
             readySetGo = new string[] { "Ready", "Set", "Go" };
             countDownFont.LocalPosition = new Vector2(windowSize.X / 2, 300);
             Reset();
@@ -230,23 +232,25 @@ namespace Invaders.GameObjects
             }
 
 
-            if (MainScene.CurrentState == MainScene.State.Died && Lives > 0)
+            if ((MainScene.CurrentState == MainScene.State.Died || 
+                 MainScene.CurrentState == MainScene.State.Won)
+                 && Lives > 0)
             {
-                deathDelay -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                transitionDelay -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                if (deathDelay <= 0)
+                if (transitionDelay <= 0)
                 {
-                    MainScene.CurrentState = MainScene.State.CountDown;
-                    if (alienBreach)
+                    
+                    if (alienBreach || MainScene.CurrentState == MainScene.State.Won)
                     {
                         Reset();
                         foreach (Barrier obj in MainScene.Barriers)
                             obj.Reset();
 
                         
-                    } 
-
-                    deathDelay = startDeathDelay;
+                    }
+                    MainScene.CurrentState = MainScene.State.CountDown;
+                    transitionDelay = starttransitionDelay;
                 }
             }
             else if (MainScene.CurrentState == MainScene.State.Died && Lives == 0)
@@ -255,7 +259,7 @@ namespace Invaders.GameObjects
             }
                 
             //If there are no more aliens then you win
-            if (activeCount == 0)
+            if (activeCount == 0 && MainScene.CurrentState != MainScene.State.CountDown)
                 MainScene.CurrentState = MainScene.State.Won;
 
             //If the score goves over 1500 then get an extra life
@@ -276,9 +280,7 @@ namespace Invaders.GameObjects
             //    (MainScene.CurrentState != MainScene.State.Playing || 
             //    (MainScene.CurrentState == MainScene.State.Died || MainScene.CurrentState == MainScene.State.Lost) && alienBreach))
             if (inputHelper.KeyPressed(Keys.Space) &&
-                (MainScene.CurrentState == MainScene.State.Start || 
-                 MainScene.CurrentState == MainScene.State.Won ||
-                 MainScene.CurrentState == MainScene.State.Lost))
+                (MainScene.CurrentState == MainScene.State.Lost))
             {
                 Reset();
             }
@@ -328,8 +330,9 @@ namespace Invaders.GameObjects
             
             if (MainScene != null)
             {
-                if (MainScene.CurrentState == MainScene.State.Lost || 
-                    MainScene.CurrentState == MainScene.State.Start)
+                if (MainScene.CurrentState == MainScene.State.Lost ||
+                    MainScene.CurrentState == MainScene.State.Start ||
+                    MainScene.CurrentState == MainScene.State.Won)
                 {
                     
                     if (alienBreach)
@@ -362,12 +365,11 @@ namespace Invaders.GameObjects
 
             LocalPosition = new Vector2(25, alienYPosition);
 
-            
             movementTimer = .95f;
             startMovementTime = movementTimer;
 
-            deathDelay = 2f;
-            startDeathDelay = deathDelay;
+            transitionDelay = 2f;
+            starttransitionDelay = transitionDelay;
 
             activeCount = WIDTH * HEIGHT;
             targetNumber = activeCount;
