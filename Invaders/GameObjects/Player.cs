@@ -14,15 +14,15 @@ namespace Invaders.GameObjects
         float speed = 250;
         public Rectangle CustomRectangle { get; set; }
         Point windowSize;
-        bool DisableInput { get; set; }
+        Vector2 startPosition;
 
         public Player(Point windowSize) : base("Sprites/Player", .5f)
         {
-            LocalPosition = new Vector2(windowSize.X / 2, windowSize.Y - 25);
+            startPosition = new Vector2(windowSize.X / 2, windowSize.Y - 25);
             SetOriginToCenter();
             this.windowSize = windowSize;
-
-            DisableInput = false;
+            Reset();
+            
         }
 
         public override void Update(GameTime gameTime)
@@ -72,6 +72,12 @@ namespace Invaders.GameObjects
             {
                 velocity.X = 0;
             }
+        }
+
+        public override void Reset()
+        {
+            base.Reset();
+            LocalPosition = startPosition;
         }
 
         public MainScene MainScene => (MainScene)ExtendedGame.GameStateManager.GetGameState(Game1.SCENE_MAIN);

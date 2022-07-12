@@ -43,8 +43,6 @@ namespace Invaders.GameObjects
             scoreFont.LocalPosition = new Vector2(50, 10);
             livesFont.LocalPosition = new Vector2(windowSize.X - 100, 10);
             startCountDownTimer = countDownTimer;
-            startMovementTime = movementTimer;
-            starttransitionDelay = transitionDelay;
             readySetGo = new string[] { "Ready", "Set", "Go" };
             countDownFont.LocalPosition = new Vector2(windowSize.X / 2, 300);
             Reset();
@@ -171,14 +169,10 @@ namespace Invaders.GameObjects
                                 MainScene.Score += 30;
                                 break;
                             case 1:
-                                MainScene.Score += 20;
-                                break;
                             case 2:
                                 MainScene.Score += 20;
                                 break;
                             case 3:
-                                MainScene.Score += 10;
-                                break;
                             case 4:
                                 MainScene.Score += 10;
                                 break;
@@ -327,7 +321,7 @@ namespace Invaders.GameObjects
 
         public override void Reset()
         {
-            
+           
             if (MainScene != null)
             {
                 if (MainScene.CurrentState == MainScene.State.Lost ||
