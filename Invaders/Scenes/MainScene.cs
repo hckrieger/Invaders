@@ -1,6 +1,7 @@
 ﻿using Engine;
 using Invaders.GameObjects;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -30,13 +31,14 @@ namespace Invaders.Scenes
         List<Projectile> projectilesForAlien = new List<Projectile>();
         Aliens aliens;
 
-
-        Enemy debugSprite = new Enemy(0);
+        CountDownTimer countDownTimer;
 
         public int Score { get; set; } = 0;
 
         public MainScene(Point windowSize)
         {
+            countDownTimer = new CountDownTimer(windowSize);
+            gameObjects.AddChild(countDownTimer);
 
             player = new Player(windowSize);
             gameObjects.AddChild(player);
@@ -65,7 +67,7 @@ namespace Invaders.Scenes
 
         }
 
- 
+
 
 
         public Projectile Projectile => projectile;

@@ -18,33 +18,29 @@ namespace Invaders.GameObjects
         float startMovementTime, movementTimer = .95f;
         float projectileTimer;
         float starttransitionDelay, transitionDelay = 2f;
-        float startCountDownTimer, countDownTimer = 1f;
         List<Enemy[]> alienArrayColumns = new List<Enemy[]>();
         Point windowSize;
         bool movingDown = false;
         float xDirection = 11, yDirection = 0;
         int counter = 1;
-        TextGameObject counterText = new TextGameObject("Fonts/Debug", 1, Color.White, TextGameObject.Alignment.Center);
+        TextGameObject debugText = new TextGameObject("Fonts/Debug", 1, Color.White, TextGameObject.Alignment.Center);
         TextGameObject scoreFont = new TextGameObject("Fonts/ScoreFont", 1, Color.White);
         TextGameObject livesFont = new TextGameObject("Fonts/ScoreFont", 1, Color.White);
-        TextGameObject countDownFont = new TextGameObject("Fonts/CountDown", 1, Color.White, TextGameObject.Alignment.Center);
+        
         int activeCount, targetNumber;
         int alienYPosition;
         bool alienBreach = false, earnedExtraLife = false;
         public int Lives { get; set; }
-        string[] readySetGo;
-        int readySetGoIndex = 0;
 
         public Aliens(Point windowSize)
         {
             EnemyGrid = new Enemy[WIDTH, HEIGHT];
             this.windowSize = windowSize;
-            counterText.LocalPosition = new Vector2(450, 100);
+            debugText.LocalPosition = new Vector2(450, 100);
             scoreFont.LocalPosition = new Vector2(50, 10);
             livesFont.LocalPosition = new Vector2(windowSize.X - 100, 10);
-            startCountDownTimer = countDownTimer;
-            readySetGo = new string[] { "Ready", "Set", "Go" };
-            countDownFont.LocalPosition = new Vector2(windowSize.X / 2, 300);
+            
+            
             Reset();
 
         }
@@ -56,35 +52,8 @@ namespace Invaders.GameObjects
             scoreFont.Text = $"Score\n  {MainScene.Score}";
             livesFont.Text = $"Lives\n   {Lives}";
 
-            counterText.Text = MainScene.CurrentState.ToString();
 
 
-            if (MainScene.CurrentState == MainScene.State.CountDown)
-            {
-                if (!countDownFont.Visible)
-                {
-                    countDownFont.Visible = true;
-                }
-                
-
-                countDownTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-                if (countDownTimer <= 0)
-                {
-                    readySetGoIndex++;
-                    if (readySetGoIndex < 3)
-                        countDownTimer = startCountDownTimer;
-                    else {
-                        readySetGoIndex = 0;
-                        countDownTimer = startCountDownTimer;
-                        countDownFont.Visible = false;
-                        MainScene.CurrentState = MainScene.State.Playing;
-                    }
-                } 
-
-              
-
-                countDownFont.Text = readySetGo[readySetGoIndex];
-            }
            
             //if gameplay is running then set the movement timer for aliens
             //makes it where aliens move in it's desired direction after a short time interval
@@ -288,10 +257,10 @@ namespace Invaders.GameObjects
                 for (int y = 0; y < HEIGHT; y++)
                     EnemyGrid[x, y].Draw(gameTime, spriteBatch);
 
-            counterText.Draw(gameTime, spriteBatch);
+            debugText.Draw(gameTime, spriteBatch);
             scoreFont.Draw(gameTime, spriteBatch);
             livesFont.Draw(gameTime, spriteBatch);
-            countDownFont.Draw(gameTime, spriteBatch);
+            
         }
 
         //Randomly selected alien that will shoot projectile
