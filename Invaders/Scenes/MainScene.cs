@@ -14,8 +14,8 @@ namespace Invaders.Scenes
 
         public enum State
         {
-            CountDown,
             Start,
+            CountDown,
             Playing,
             Died,
             Won,
@@ -32,16 +32,25 @@ namespace Invaders.Scenes
         Aliens aliens;
 
         CountDownTimer countDownTimer;
-
+        TextGameObject livesFont = new TextGameObject("Fonts/ScoreFont", 1, Color.White);
+        TextGameObject scoreFont = new TextGameObject("Fonts/ScoreFont", 1, Color.White);
+        public int Lives { get; set; }
+        public bool EarnedExtraLife { get; set; }
         public int Score { get; set; } = 0;
+        Point windowSize;
+        float startTransitionDelay, transitionDelay = 2f;
 
         public MainScene(Point windowSize)
         {
+            this.windowSize = windowSize;
+
             countDownTimer = new CountDownTimer(windowSize);
             gameObjects.AddChild(countDownTimer);
 
             player = new Player(windowSize);
             gameObjects.AddChild(player);
+
+            
 
             for (int i = 0; i < 5; i++)
             {
@@ -65,10 +74,100 @@ namespace Invaders.Scenes
                 gameObjects.AddChild(barriers[i]);
             }
 
+            scoreFont.LocalPosition = new Vector2(50, 10);
+            gameObjects.AddChild(scoreFont);
+
+            livesFont.LocalPosition = new Vector2(windowSize.X - 100, 10);
+            gameObjects.AddChild(livesFont);
+
+            startTransitionDelay = transitionDelay;
+
+            Reset();
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+
+            livesFont.Text = $"Lives\n   {Lives}";
+            scoreFont.Text = $"Score\n  {Score}";
+
+            //If the score goves over 1500 then get an extra life
+            if (Score >= 1500 && !EarnedExtraLife)
+            {
+                Lives++;
+                EarnedExtraLife = true;
+            }
+
+            TransitionDelay(gameTime);
+
+        }
+
+        public override void HandleInput(InputHelper inputHelper)
+        {
+            base.HandleInput(inputHelper);
+            if (inputHelper.KeyPressed(Keys.Space) &&
+               (CurrentState == State.Lost))
+            {
+                Reset();
+            }
+
         }
 
 
+        public override void Reset()
+        {
+            base.Reset();
+            
+            aliens.Reset();
 
+            if (CurrentState == State.Lost || CurrentState == State.Start)
+            {
+                Lives = 3;
+                aliens.AlienYPosition = windowSize.Y - 525;
+                Score = 0;
+                EarnedExtraLife = false;
+            }
+            else if (CurrentState == State.Won)
+            {
+                if (aliens.AlienYPosition < windowSize.Y - 525)
+                    aliens.AlienYPosition += 33;
+            }
+            
+            aliens.LocalPosition = new Vector2(25, aliens.AlienYPosition);
+
+            if (CurrentState == State.Start)
+                CurrentState = State.CountDown;
+        }
+
+        public void TransitionDelay(GameTime gameTime)
+        {
+            if ((CurrentState == State.Died ||
+                 CurrentState == State.Won)
+                 && Lives > 0)
+            {
+                transitionDelay -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                if (transitionDelay <= 0)
+                {
+
+                    if (aliens.AlienBreach || CurrentState == State.Won)
+                    {
+                        Reset();
+                        foreach (Barrier obj in Barriers)
+                            obj.Reset();
+
+
+                    }
+                    CurrentState = State.CountDown;
+                    transitionDelay = startTransitionDelay;
+                }
+            }
+            else if (CurrentState == State.Died && Lives == 0)
+            {
+                CurrentState = State.Lost;
+            }
+        }
 
         public Projectile Projectile => projectile;
 

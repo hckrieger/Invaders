@@ -36,7 +36,7 @@ namespace Invaders.GameObjects
                 if (CollisionDetection.ShapesIntersect(obj.CustomBox, CustomRectangle))
                 {
                     MainScene.CurrentState = MainScene.State.Died;
-                    MainScene.Aliens.Lives--;
+                    MainScene.Lives--;
                     break;
                 }
             }

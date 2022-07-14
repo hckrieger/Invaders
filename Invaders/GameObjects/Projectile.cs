@@ -33,8 +33,7 @@ namespace Invaders.GameObjects
         {
             base.Update(gameTime);
 
-            if (MainScene.CurrentState == MainScene.State.Start || 
-                MainScene.CurrentState == MainScene.State.Died || CollisionDetection.ShapesIntersect(CustomBox, MainScene.Player.CustomRectangle))
+            if (MainScene.CurrentState == MainScene.State.Died || CollisionDetection.ShapesIntersect(CustomBox, MainScene.Player.CustomRectangle))
                 Active = false;
 
 
