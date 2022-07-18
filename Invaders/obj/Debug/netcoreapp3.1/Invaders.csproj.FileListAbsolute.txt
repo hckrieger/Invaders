@@ -40,3 +40,4 @@ C:\Users\hunte\source\repos\MonoGame\games\Invaders\Invaders\bin\Debug\netcoreap
 C:\Users\hunte\source\repos\MonoGame\games\Invaders\Invaders\bin\Debug\netcoreapp3.1\Content\Fonts\Play.xnb
 C:\Users\hunte\source\repos\MonoGame\games\Invaders\Invaders\bin\Debug\netcoreapp3.1\Content\Fonts\Credit.xnb
 C:\Users\hunte\source\repos\MonoGame\games\Invaders\Invaders\bin\Debug\netcoreapp3.1\Content\Fonts\CountDown.xnb
+C:\Users\hunte\source\repos\MonoGame\games\Invaders\Invaders\bin\Debug\netcoreapp3.1\Content\Sprites\mysteryShip.xnb

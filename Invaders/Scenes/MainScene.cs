@@ -27,7 +27,7 @@ namespace Invaders.Scenes
         Player player;
         Barrier[] barriers = new Barrier[4];
         Projectile projectile;
-
+        MysteryShip ship;
         List<Projectile> projectilesForAlien = new List<Projectile>();
         Aliens aliens;
 
@@ -50,11 +50,12 @@ namespace Invaders.Scenes
             player = new Player(windowSize);
             gameObjects.AddChild(player);
 
-            
+            ship = new MysteryShip(windowSize);
+            gameObjects.AddChild(ship);
 
             for (int i = 0; i < 5; i++)
             {
-                projectilesForAlien.Add(new Projectile(windowSize, 390, .033f));
+                projectilesForAlien.Add(new Projectile(windowSize, 390, .066f));
                 projectilesForAlien[i].Active = false;
                 gameObjects.AddChild(projectilesForAlien[i]);
             }
@@ -119,7 +120,7 @@ namespace Invaders.Scenes
         {
             base.Reset();
             
-            aliens.Reset();
+            
 
             if (CurrentState == State.Lost || CurrentState == State.Start)
             {
@@ -127,17 +128,22 @@ namespace Invaders.Scenes
                 aliens.AlienYPosition = windowSize.Y - 525;
                 Score = 0;
                 EarnedExtraLife = false;
+                CurrentState = State.CountDown;
             }
             else if (CurrentState == State.Won)
             {
                 if (aliens.AlienYPosition < windowSize.Y - 525)
                     aliens.AlienYPosition += 33;
+
+                foreach (Barrier obj in Barriers)
+                    obj.Reset();
             }
             
             aliens.LocalPosition = new Vector2(25, aliens.AlienYPosition);
-
-            if (CurrentState == State.Start)
-                CurrentState = State.CountDown;
+            player.Reset();
+            aliens.Reset();
+            ship.Reset();
+            
         }
 
         public void TransitionDelay(GameTime gameTime)
@@ -152,13 +158,8 @@ namespace Invaders.Scenes
                 {
 
                     if (aliens.AlienBreach || CurrentState == State.Won)
-                    {
                         Reset();
-                        foreach (Barrier obj in Barriers)
-                            obj.Reset();
 
-
-                    }
                     CurrentState = State.CountDown;
                     transitionDelay = startTransitionDelay;
                 }

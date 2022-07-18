@@ -43,7 +43,7 @@ namespace Invaders.GameObjects
             base.Update(gameTime);
 
             
-            debugFont.Text = MainScene.CurrentState.ToString();
+            debugFont.Text = MainScene.Player.ShotsFired.ToString();
 
             Movement(gameTime);
             HorizontalDirection();
@@ -104,7 +104,8 @@ namespace Invaders.GameObjects
         //Randomly selected alien that will shoot projectile
         public Enemy BlastingAlien()
         {
-            var column = alienArrayColumns[ExtendedGame.Random.Next(alienArrayColumns.Count)];
+            var randomIndex = ExtendedGame.Random.Next(alienArrayColumns.Count);
+            var column = alienArrayColumns[randomIndex];
             
                 Enemy selectedEnemy = null;
 
@@ -130,9 +131,10 @@ namespace Invaders.GameObjects
         {
             alienBreach = false;
 
+            xDirection = Math.Abs(xDirection);
+
             movementTimer = 1f;
             startMovementTime = movementTimer;
-
 
             activeCount = WIDTH * HEIGHT;
             targetNumber = activeCount;

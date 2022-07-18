@@ -36,9 +36,7 @@ namespace Invaders.GameObjects
             if (MainScene.CurrentState == MainScene.State.Died || CollisionDetection.ShapesIntersect(CustomBox, MainScene.Player.CustomRectangle))
                 Active = false;
 
-
-
-            CustomBox = CustomBounds(new Rectangle(-1, 0, 12, 12));
+            CustomBox = CustomBounds(new Rectangle(-2, 0, 13, 12));
 
             if (MainScene.CurrentState == MainScene.State.Playing)
                 velocity.Y = speed;
@@ -50,7 +48,6 @@ namespace Invaders.GameObjects
                (GlobalPosition.Y <= 55 || GlobalPosition.Y >= windowSize.Y) ||
                (MainScene.CurrentState == MainScene.State.Lost || MainScene.CurrentState == MainScene.State.Won))
                 Reset();
-
 
         }
 

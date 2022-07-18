@@ -15,7 +15,7 @@ namespace Invaders.GameObjects
         public Rectangle CustomRectangle { get; set; }
         Point windowSize;
         Vector2 startPosition;
-
+        public int ShotsFired { get; set; }
         public Player(Point windowSize) : base("Sprites/Player", .5f)
         {
             startPosition = new Vector2(windowSize.X / 2, windowSize.Y - 25);
@@ -37,6 +37,7 @@ namespace Invaders.GameObjects
                 {
                     MainScene.CurrentState = MainScene.State.Died;
                     MainScene.Lives--;
+                    ShotsFired = 0;
                     break;
                 }
             }
@@ -66,7 +67,9 @@ namespace Invaders.GameObjects
                         projectile.StopTimer();
                         projectile.Active = true;
                         projectile.LocalPosition = GlobalPosition + new Vector2(0, -21);
+                        ShotsFired++;
                     }
+                    
                 }
             } else
             {
@@ -78,6 +81,7 @@ namespace Invaders.GameObjects
         {
             base.Reset();
             LocalPosition = startPosition;
+            ShotsFired = 0;
         }
 
         public MainScene MainScene => (MainScene)ExtendedGame.GameStateManager.GetGameState(Game1.SCENE_MAIN);
