@@ -43,7 +43,7 @@ namespace Invaders.GameObjects
             base.Update(gameTime);
 
             
-            debugFont.Text = MainScene.Player.ShotsFired.ToString();
+            debugFont.Text = MainScene.CurrentState.ToString();
 
             Movement(gameTime);
             HorizontalDirection();
@@ -85,8 +85,8 @@ namespace Invaders.GameObjects
                 MainScene.CurrentState = MainScene.State.Won;
 
             //Make sure aliens don't move under a certain speed
-            if (startMovementTime < .025f)
-                startMovementTime = .025f;
+            if (startMovementTime < .02f)
+                startMovementTime = .02f;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -279,15 +279,16 @@ namespace Invaders.GameObjects
             {
                 foreach (Projectile obj in MainScene.ProjectilesForAlien)
                 {
-                    if (!obj.Active && obj != null && BlastingAlien() != null && activeCount > 0)
+                    if (!obj.Active && BlastingAlien() != null && activeCount > 0)
                     {
+                        obj.Reset();
                         obj.Active = true;
                         obj.LocalPosition = BlastingAlien().GlobalPosition;
                         break;
                     }
                 }
 
-                projectileTimer = (float)ExtendedGame.Random.NextDouble(.5, .8);
+                projectileTimer = (float)ExtendedGame.Random.NextDouble(.33, .8);
             }
         }
 

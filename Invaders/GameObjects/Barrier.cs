@@ -48,15 +48,6 @@ namespace Invaders.GameObjects
                 
         }
 
-        public override void HandleInput(InputHelper inputHelper)
-        {
-            base.HandleInput(inputHelper);
-
-            if (inputHelper.KeyPressed(Keys.Space) &&
-                ((MainScene.CurrentState == MainScene.State.Won ||
-                MainScene.CurrentState == MainScene.State.Lost)))
-                Reset();
-        }
 
         public void CollideWithBarrier(Projectile projectile)
         {

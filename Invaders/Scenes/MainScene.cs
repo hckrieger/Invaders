@@ -31,12 +31,17 @@ namespace Invaders.Scenes
         List<Projectile> projectilesForAlien = new List<Projectile>();
         Aliens aliens;
 
+        GameOverDisplay gameOverDisplay;
+
         CountDownTimer countDownTimer;
         TextGameObject livesFont = new TextGameObject("Fonts/ScoreFont", 1, Color.White);
         TextGameObject scoreFont = new TextGameObject("Fonts/ScoreFont", 1, Color.White);
+        TextGameObject highScoreFont = new TextGameObject("Fonts/ScoreFont", 1, Color.White);
+
         public int Lives { get; set; }
         public bool EarnedExtraLife { get; set; }
         public int Score { get; set; } = 0;
+        private int highScore = 0;
         Point windowSize;
         float startTransitionDelay, transitionDelay = 2f;
 
@@ -53,9 +58,9 @@ namespace Invaders.Scenes
             ship = new MysteryShip(windowSize);
             gameObjects.AddChild(ship);
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 3; i++)
             {
-                projectilesForAlien.Add(new Projectile(windowSize, 390, .066f));
+                projectilesForAlien.Add(new Projectile(windowSize, 300, .066f));
                 projectilesForAlien[i].Active = false;
                 gameObjects.AddChild(projectilesForAlien[i]);
             }
@@ -78,8 +83,14 @@ namespace Invaders.Scenes
             scoreFont.LocalPosition = new Vector2(50, 10);
             gameObjects.AddChild(scoreFont);
 
+            highScoreFont.LocalPosition = new Vector2(windowSize.X / 2 - 50, 10);
+            gameObjects.AddChild(highScoreFont);
+
             livesFont.LocalPosition = new Vector2(windowSize.X - 100, 10);
             gameObjects.AddChild(livesFont);
+
+            gameOverDisplay = new GameOverDisplay(windowSize);
+            gameObjects.AddChild(gameOverDisplay);
 
             startTransitionDelay = transitionDelay;
 
@@ -91,6 +102,7 @@ namespace Invaders.Scenes
             base.Update(gameTime);
 
             livesFont.Text = $"Lives\n   {Lives}";
+            highScoreFont.Text = $"High Score\n     {highScore}";
             scoreFont.Text = $"Score\n  {Score}";
 
             //If the score goves over 1500 then get an extra life
@@ -101,17 +113,6 @@ namespace Invaders.Scenes
             }
 
             TransitionDelay(gameTime);
-
-        }
-
-        public override void HandleInput(InputHelper inputHelper)
-        {
-            base.HandleInput(inputHelper);
-            if (inputHelper.KeyPressed(Keys.Space) &&
-               (CurrentState == State.Lost))
-            {
-                Reset();
-            }
 
         }
 
@@ -129,6 +130,10 @@ namespace Invaders.Scenes
                 Score = 0;
                 EarnedExtraLife = false;
                 CurrentState = State.CountDown;
+
+
+                foreach (Barrier obj in Barriers)
+                    obj.Reset();
             }
             else if (CurrentState == State.Won)
             {
@@ -149,8 +154,7 @@ namespace Invaders.Scenes
         public void TransitionDelay(GameTime gameTime)
         {
             if ((CurrentState == State.Died ||
-                 CurrentState == State.Won)
-                 && Lives > 0)
+                 CurrentState == State.Won))
             {
                 transitionDelay -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -160,15 +164,30 @@ namespace Invaders.Scenes
                     if (aliens.AlienBreach || CurrentState == State.Won)
                         Reset();
 
-                    CurrentState = State.CountDown;
+
+                    if (Lives == 0)
+                    {
+                        
+                        if (Score > highScore)
+                            highScore = Score;
+
+                        
+                        CurrentState = State.Lost;
+                    }
+                    else
+                    {
+                        CurrentState = State.CountDown;
+                    }
+
+                    
+
                     transitionDelay = startTransitionDelay;
                 }
             }
-            else if (CurrentState == State.Died && Lives == 0)
-            {
-                CurrentState = State.Lost;
-            }
+            
         }
+
+
 
         public Projectile Projectile => projectile;
 

@@ -16,12 +16,14 @@
     <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Sprites/Barrier2.png</File>
     <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Sprites/Barrier3.png</File>
     <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Sprites/Enemy.png</File>
+    <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Sprites/GameOverDisplay.png</File>
     <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Sprites/mysteryShip.png</File>
     <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Sprites/PlayButton.png</File>
     <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Sprites/Player.png</File>
     <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Sprites/Projectile.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

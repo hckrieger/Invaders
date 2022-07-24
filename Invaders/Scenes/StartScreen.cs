@@ -14,7 +14,7 @@ namespace Invaders.Scenes
 
         public StartScreen(Point windowSize)
         {
-            Color color = Color.ForestGreen;
+            var color = Color.ForestGreen;
             TextGameObject title = new TextGameObject("Fonts/Title", 1, color, TextGameObject.Alignment.Center);
             title.LocalPosition = new Vector2(windowSize.X / 2, 80);
             title.Text = "Invaders";
