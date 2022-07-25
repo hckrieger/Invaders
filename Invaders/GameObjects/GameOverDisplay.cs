@@ -27,13 +27,16 @@ namespace Invaders.GameObjects
             playAgainButton = new Button("Sprites/PlayButton", .95f);
             playAgainButton.Parent = this;
             playAgainButton.SetOriginToCenter();
-            playAgainButton.LocalPosition = new Vector2(0, 100);
+            playAgainButton.LocalPosition = new Vector2(0, 170);
 
             buttonFont = new TextGameObject("Fonts/Play", 1f, Color.GreenYellow, TextGameObject.Alignment.Center);
             buttonFont.Text = "PLAY";
             buttonFont.Parent = playAgainButton;
             buttonFont.LocalPosition = new Vector2(0, -15);
 
+            message = new TextGameObject("Fonts/ScoreFont", 1f, Color.Black, TextGameObject.Alignment.Center);
+            message.Parent = this;
+            message.LocalPosition = new Vector2(0, -45);
         }
 
         public override void Update(GameTime gameTime)
@@ -46,6 +49,7 @@ namespace Invaders.GameObjects
                 header.Visible = true;
                 playAgainButton.Visible = true;
                 buttonFont.Visible = true;
+                message.Visible = true;
             }
             else
             {
@@ -53,6 +57,7 @@ namespace Invaders.GameObjects
                 header.Visible = false;
                 playAgainButton.Visible = false;
                 buttonFont.Visible = false;
+                message.Visible = false;
             }
 
 
@@ -74,6 +79,11 @@ namespace Invaders.GameObjects
             playAgainButton.Draw(gameTime, spriteBatch);
             header.Draw(gameTime, spriteBatch);
             buttonFont.Draw(gameTime, spriteBatch);
+            message.Draw(gameTime, spriteBatch);
+        }
+
+        public string GameOverMessage {
+            set { message.Text = value; }
         }
 
         public MainScene MainScene => (MainScene)ExtendedGame.GameStateManager.GetGameState(Game1.SCENE_MAIN);

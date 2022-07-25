@@ -157,7 +157,7 @@ namespace Invaders.GameObjects
                     EnemyGrid[x, y].Color = Color.White;
 
                     EnemyGrid[x, y].Parent = this;
-                    EnemyGrid[x, y].LocalPosition = new Vector2(x * 44, y * 46);
+                    EnemyGrid[x, y].LocalPosition = new Vector2(x * 43, y * 46);
 
                     //HEIGHT = 6
                     //Make an array for each column of aliens 
@@ -207,7 +207,6 @@ namespace Invaders.GameObjects
                 if (alienArrayColumns.First()[0].GlobalPosition.X <= 25 && xDirection < 0)
                 {
                     xDirection = Math.Abs(xDirection);
-
                     movingDown = true;
                 }
                 else if (alienArrayColumns.Last()[0].GlobalPosition.X >= windowSize.X - 25 && xDirection > 0)
@@ -228,14 +227,14 @@ namespace Invaders.GameObjects
 
             if (speedUp && startMovementTime > .025f)
             {
-                if (activeCount >= 5)
+                if (activeCount >= 7)
                 {
                     startMovementTime -= .0415f;
                     targetNumber -= 5;
                 }
                 else
                 {
-                    startMovementTime -= .0666f;
+                    startMovementTime -= .0625f;
                     targetNumber -= 1;
                 }
 

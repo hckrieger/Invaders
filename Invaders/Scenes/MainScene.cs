@@ -121,8 +121,6 @@ namespace Invaders.Scenes
         {
             base.Reset();
             
-            
-
             if (CurrentState == State.Lost || CurrentState == State.Start)
             {
                 Lives = 3;
@@ -137,8 +135,10 @@ namespace Invaders.Scenes
             }
             else if (CurrentState == State.Won)
             {
-                if (aliens.AlienYPosition < windowSize.Y - 525)
-                    aliens.AlienYPosition += 33;
+                if (aliens.AlienYPosition >= windowSize.Y - 375)
+                    aliens.AlienYPosition = windowSize.Y - 375;
+                else
+                    aliens.AlienYPosition += 50;
 
                 foreach (Barrier obj in Barriers)
                     obj.Reset();
@@ -167,19 +167,22 @@ namespace Invaders.Scenes
 
                     if (Lives == 0)
                     {
-                        
                         if (Score > highScore)
+                        {
                             highScore = Score;
+                            gameOverDisplay.GameOverMessage = "You got the high score!\n\nPlay Again?";
+                        } else
+                        {
+                            gameOverDisplay.GameOverMessage = "Good Game.\n\nPlay Again?";
+                        }
+                            
 
-                        
                         CurrentState = State.Lost;
                     }
                     else
                     {
                         CurrentState = State.CountDown;
                     }
-
-                    
 
                     transitionDelay = startTransitionDelay;
                 }

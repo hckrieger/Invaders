@@ -98,7 +98,7 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Barrier2.png
 
-#begin Sprites/Barrier3.png
+#begin Sprites/Barrier4.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -108,7 +108,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Sprites/Barrier3.png
+/build:Sprites/Barrier4.png
 
 #begin Sprites/Enemy.png
 /importer:TextureImporter
