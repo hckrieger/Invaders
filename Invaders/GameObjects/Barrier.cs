@@ -73,11 +73,25 @@ namespace Invaders.GameObjects
         {
             base.Reset();
 
+            ResetBarrierPixels();
+
+        }
+
+        void ResetBarrierPixels()
+        {
             startPixelData.CopyTo(pixelData, 0);
             Texture.SetData(pixelData);
 
-            
+            var wrong = false;
 
+            for (int i = 0; i < Width * Height; i++)
+            {
+                if (pixelData[i] != startPixelData[i])
+                    wrong = true;
+            }
+
+            if (wrong)
+                ResetBarrierPixels();
         }
 
         public MainScene MainScene => (MainScene)ExtendedGame.GameStateManager.GetGameState(Game1.SCENE_MAIN);

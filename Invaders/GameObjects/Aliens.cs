@@ -17,7 +17,7 @@ namespace Invaders.GameObjects
         const int HEIGHT = 5;
         float startMovementTime, movementTimer = 1f;
         float projectileTimer;
-        
+        TextGameObject debugFont = new TextGameObject("Fonts/Debug", 1f, Color.White);
         List<Enemy[]> alienArrayColumns = new List<Enemy[]>();
         Point windowSize;
         bool movingDown = false;
@@ -39,7 +39,7 @@ namespace Invaders.GameObjects
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-
+            debugFont.Text = targetNumber.ToString();
             Movement(gameTime);
             HorizontalDirection();
             SpeedUp();
@@ -89,6 +89,8 @@ namespace Invaders.GameObjects
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             base.Draw(gameTime, spriteBatch);
+
+            debugFont.Draw(gameTime, spriteBatch);
 
             for (int x = 0; x < WIDTH; x++)
                 for (int y = 0; y < HEIGHT; y++)
@@ -153,7 +155,7 @@ namespace Invaders.GameObjects
                     EnemyGrid[x, y].Color = Color.White;
 
                     EnemyGrid[x, y].Parent = this;
-                    EnemyGrid[x, y].LocalPosition = new Vector2(x * 43, y * 46);
+                    EnemyGrid[x, y].LocalPosition = new Vector2(x * 43, y * 45);
 
                     //HEIGHT = 6
                     //Make an array for each column of aliens 
@@ -182,10 +184,10 @@ namespace Invaders.GameObjects
 
                 if (movingDown)
                 {
-                    yDirection = 20;
+                    yDirection = 23;
 
-                    if (startMovementTime >= .025f)
-                        startMovementTime -= .0415f;
+                    if (startMovementTime >= .02f)
+                        startMovementTime -= .045f;
                     movingDown = false;
                 }
                 else
@@ -217,20 +219,20 @@ namespace Invaders.GameObjects
         {
             //Speed the aliens up when you shoot more of them
             bool speedUp = false;
-            if (activeCount < targetNumber && (activeCount % 5 == 0 && activeCount >= 5 ||
-                activeCount < 5))
+            if (activeCount < targetNumber && (activeCount % 5 == 0 && activeCount > 7 ||
+                activeCount <= 7))
                 speedUp = true;
 
-            if (speedUp && startMovementTime > .025f)
+            if (speedUp && startMovementTime > .02f)
             {
-                if (activeCount >= 7)
+                if (activeCount > 7)
                 {
-                    startMovementTime -= .0415f;
+                    startMovementTime -= .045f;
                     targetNumber -= 5;
                 }
                 else
                 {
-                    startMovementTime -= .06f;
+                    startMovementTime -= .04f;
                     targetNumber -= 1;
                 }
 
