@@ -12,7 +12,6 @@ namespace Invaders.GameObjects
     {
         public float xVelocity;
         Point windowSize;
-        TextGameObject debug = new TextGameObject("Fonts/debug", 1, Color.White);
         TextGameObject scoreDisplay = new TextGameObject("Fonts/debug", 1, Color.Red);
         float scoreTimer, startScoreTimer;
         int addedScore;
@@ -46,7 +45,6 @@ namespace Invaders.GameObjects
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            debug.Text = expectedShots.ToString();
 ;
             AfterCollision(gameTime);
 
@@ -113,7 +111,7 @@ namespace Invaders.GameObjects
         public override void Reset()
         {
             base.Reset();
-            expectedShots = 22;
+            expectedShots = ExtendedGame.Random.Next(20, 35);
             currentState = State.Pause;
             previousState = currentState;
             LocalPosition = new Vector2(windowSize.X + (Width/2), yPosition);
@@ -124,13 +122,12 @@ namespace Invaders.GameObjects
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             base.Draw(gameTime, spriteBatch);
-            debug.Draw(gameTime, spriteBatch);
             scoreDisplay.Draw(gameTime, spriteBatch);
         }
 
         void AfterCollision(GameTime gameTime)
         {
-            if (CollisionDetection.ShapesIntersect(MainScene.Projectile.CustomBox, BoundingBox))
+            if (CollisionDetection.ShapesIntersect(MainScene.Projectile.BoundingBox, BoundingBox))
             {
                 var scoreIndex = ExtendedGame.Random.Next(0, 5);
                 switch (scoreIndex)

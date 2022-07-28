@@ -18,7 +18,7 @@ namespace Invaders.GameObjects
         public int ShotsFired { get; set; }
         public Player(Point windowSize) : base("Sprites/Player", .5f)
         {
-            startPosition = new Vector2(windowSize.X / 2, windowSize.Y - 25);
+            startPosition = new Vector2(windowSize.X / 2, windowSize.Y - 20);
             SetOriginToCenter();
             this.windowSize = windowSize;
             Reset();
@@ -29,11 +29,11 @@ namespace Invaders.GameObjects
         {
             base.Update(gameTime);
 
-            CustomRectangle = CustomBounds(new Rectangle(0, 8, 48, 16));
+            //CustomRectangle = CustomBounds(new Rectangle(0, 8, 48, 16));
 
             foreach (Projectile obj in MainScene.ProjectilesForAlien)
             {
-                if (CollisionDetection.ShapesIntersect(obj.CustomBox, CustomRectangle))
+                if (CollisionDetection.ShapesIntersect(obj.BoundingBox, BoundingBox))
                 {
                     MainScene.CurrentState = MainScene.State.Died;
                     MainScene.Lives--;

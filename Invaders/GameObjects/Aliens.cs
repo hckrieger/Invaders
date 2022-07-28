@@ -22,7 +22,6 @@ namespace Invaders.GameObjects
         Point windowSize;
         bool movingDown = false;
         float xDirection = 11, yDirection = 0;
-        TextGameObject debugFont = new TextGameObject("Fonts/Debug", 1, Color.White, TextGameObject.Alignment.Center);
         int activeCount, targetNumber;
         public int AlienYPosition { get; set; }
         bool alienBreach = false;
@@ -32,7 +31,6 @@ namespace Invaders.GameObjects
         {
             EnemyGrid = new Enemy[WIDTH, HEIGHT];
             this.windowSize = windowSize;
-            debugFont.LocalPosition = new Vector2(450, 100);
             
             Reset();
 
@@ -41,9 +39,6 @@ namespace Invaders.GameObjects
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-
-            
-            debugFont.Text = MainScene.CurrentState.ToString();
 
             Movement(gameTime);
             HorizontalDirection();
@@ -59,12 +54,14 @@ namespace Invaders.GameObjects
                     //If the aliens get past the barriers then you lose
                     if (EnemyGrid[x, y].BoundingBox.Bottom >= MainScene.Barriers[0].BoundingBox.Bottom)
                     {
+                        if (alienBreach)
+                            break;
+
                         alienBreach = true;
-                        if (MainScene.CurrentState != MainScene.State.Died && MainScene.Lives > 0)
-                            MainScene.Lives--;
+                        MainScene.Lives = 0;
                         MainScene.CurrentState = MainScene.State.Died;
 
-                        break;
+                        
                     }
                 }
             }
@@ -97,7 +94,6 @@ namespace Invaders.GameObjects
                 for (int y = 0; y < HEIGHT; y++)
                     EnemyGrid[x, y].Draw(gameTime, spriteBatch);
 
-            debugFont.Draw(gameTime, spriteBatch);
             
         }
 
@@ -234,7 +230,7 @@ namespace Invaders.GameObjects
                 }
                 else
                 {
-                    startMovementTime -= .0625f;
+                    startMovementTime -= .06f;
                     targetNumber -= 1;
                 }
 

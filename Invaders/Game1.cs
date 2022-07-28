@@ -14,8 +14,8 @@ namespace Invaders
         {
             IsMouseVisible = true;
 
-            windowSize = new Point(610, 675);
-            worldSize = new Point(610, 675);
+            windowSize = new Point(610, 650);
+            worldSize = new Point(610, 650);
         }
 
         protected override void LoadContent()

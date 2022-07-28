@@ -19,15 +19,15 @@ namespace Invaders.GameObjects
 
             LocalPosition = new Vector2(windowSize.X / 2, windowSize.Y / 2);
 
-            header = new TextGameObject("Fonts/Title", 1f, Color.Black, TextGameObject.Alignment.Center);
+            header = new TextGameObject("Fonts/GameOverFont", 1f, Color.Black, TextGameObject.Alignment.Center);
             header.Parent = this;
             header.Text = "Game Over";
-            header.LocalPosition = new Vector2(0, -225);
+            header.LocalPosition = new Vector2(0, -166);
 
             playAgainButton = new Button("Sprites/PlayButton", .95f);
             playAgainButton.Parent = this;
             playAgainButton.SetOriginToCenter();
-            playAgainButton.LocalPosition = new Vector2(0, 170);
+            playAgainButton.LocalPosition = new Vector2(0, 115);
 
             buttonFont = new TextGameObject("Fonts/Play", 1f, Color.GreenYellow, TextGameObject.Alignment.Center);
             buttonFont.Text = "PLAY";
@@ -36,7 +36,7 @@ namespace Invaders.GameObjects
 
             message = new TextGameObject("Fonts/ScoreFont", 1f, Color.Black, TextGameObject.Alignment.Center);
             message.Parent = this;
-            message.LocalPosition = new Vector2(0, -45);
+            message.LocalPosition = new Vector2(0, -60);
         }
 
         public override void Update(GameTime gameTime)
@@ -61,7 +61,7 @@ namespace Invaders.GameObjects
             }
 
 
-        }
+}
 
         public override void HandleInput(InputHelper inputHelper)
         {

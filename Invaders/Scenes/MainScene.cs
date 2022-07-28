@@ -60,7 +60,7 @@ namespace Invaders.Scenes
 
             for (int i = 0; i < 3; i++)
             {
-                projectilesForAlien.Add(new Projectile(windowSize, 300, .066f));
+                projectilesForAlien.Add(new Projectile(windowSize, 325, .066f));
                 projectilesForAlien[i].Active = false;
                 gameObjects.AddChild(projectilesForAlien[i]);
             }
@@ -70,13 +70,13 @@ namespace Invaders.Scenes
             aliens = new Aliens(windowSize);
             gameObjects.AddChild(aliens);
 
-            projectile = new Projectile(windowSize, -660, .01f);
+            projectile = new Projectile(windowSize, -625, .015f);
             gameObjects.AddChild(projectile);
 
             for (int i = 0; i < 4; i++)
             {
                 barriers[i] = new Barrier(i);
-                barriers[i].LocalPosition = new Vector2(87 + i * 145, windowSize.Y - 120);
+                barriers[i].LocalPosition = new Vector2(87 + i * 145, windowSize.Y - 105);
                 gameObjects.AddChild(barriers[i]);
             }
 
@@ -135,10 +135,10 @@ namespace Invaders.Scenes
             }
             else if (CurrentState == State.Won)
             {
-                if (aliens.AlienYPosition >= windowSize.Y - 375)
-                    aliens.AlienYPosition = windowSize.Y - 375;
+                if (aliens.AlienYPosition >= windowSize.Y - 360)
+                    aliens.AlienYPosition = windowSize.Y - 360;
                 else
-                    aliens.AlienYPosition += 50;
+                    aliens.AlienYPosition += 55;
 
                 foreach (Barrier obj in Barriers)
                     obj.Reset();
@@ -158,15 +158,16 @@ namespace Invaders.Scenes
             {
                 transitionDelay -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                if (transitionDelay <= 0)
-                {
+                if (transitionDelay <= 0)      
+                {     
 
-                    if (aliens.AlienBreach || CurrentState == State.Won)
+                    if (CurrentState == State.Won)
                         Reset();
 
 
-                    if (Lives == 0)
+                    if (Lives == 0 || Aliens.AlienBreach)
                     {
+
                         if (Score > highScore)
                         {
                             highScore = Score;

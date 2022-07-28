@@ -33,10 +33,10 @@ namespace Invaders.GameObjects
         {
             base.Update(gameTime);
 
-            if (MainScene.CurrentState == MainScene.State.Died || CollisionDetection.ShapesIntersect(CustomBox, MainScene.Player.CustomRectangle))
+            if (MainScene.CurrentState == MainScene.State.Died || CollisionDetection.ShapesIntersect(BoundingBox, MainScene.Player.CustomRectangle))
                 Active = false;
 
-            CustomBox = CustomBounds(new Rectangle(-2, 0, 13, 12));
+            CustomBox = CustomBounds(new Rectangle(-4, 0, 12, 12));
 
             if (MainScene.CurrentState == MainScene.State.Playing)
                 velocity.Y = speed;
@@ -71,5 +71,7 @@ namespace Invaders.GameObjects
         }
 
         public MainScene MainScene => (MainScene)ExtendedGame.GameStateManager.GetGameState(Game1.SCENE_MAIN);
+
+        public float Speed { get { return speed; } }
     }
 }

@@ -34,6 +34,13 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Debug.spritefont
 
+#begin Fonts/GameOverFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/GameOverFont.spritefont
+
 #begin Fonts/Instructions.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor

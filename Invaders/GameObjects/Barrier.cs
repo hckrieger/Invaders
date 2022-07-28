@@ -42,8 +42,10 @@ namespace Invaders.GameObjects
                     CollideWithBarrier(obj);
             }
 
+            Rectangle determineRectangle = (MainScene.Projectile.Speed > 0) ? MainScene.Projectile.BoundingBox : MainScene.Projectile.CustomBox;
+
             //If projectile collides with texture bounds of barrier sprite...
-            if (CollisionDetection.ShapesIntersect(MainScene.Projectile.CustomBox, BoundingBox))
+            if (CollisionDetection.ShapesIntersect(determineRectangle, BoundingBox))
                 CollideWithBarrier(MainScene.Projectile);
                 
         }
@@ -73,6 +75,9 @@ namespace Invaders.GameObjects
 
             startPixelData.CopyTo(pixelData, 0);
             Texture.SetData(pixelData);
+
+            
+
         }
 
         public MainScene MainScene => (MainScene)ExtendedGame.GameStateManager.GetGameState(Game1.SCENE_MAIN);

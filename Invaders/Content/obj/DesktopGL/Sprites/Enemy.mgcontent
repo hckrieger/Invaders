@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Sprites/Enemy.png</SourceFile>
-  <SourceTime>2022-07-25T05:44:46.919857-04:00</SourceTime>
+  <SourceTime>2022-07-27T18:49:19.4817257-04:00</SourceTime>
   <DestFile>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/bin/DesktopGL/Sprites/Enemy.xnb</DestFile>
-  <DestTime>2022-07-25T05:45:26.9814034-04:00</DestTime>
+  <DestTime>2022-07-27T18:51:22.730046-04:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2018-12-08T11:35:54-05:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

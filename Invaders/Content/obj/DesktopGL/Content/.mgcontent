@@ -7,6 +7,7 @@
     <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Fonts/CountDown.spritefont</File>
     <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Fonts/Credit.spritefont</File>
     <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Fonts/Debug.spritefont</File>
+    <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Fonts/GameOverFont.spritefont</File>
     <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Fonts/Instructions.spritefont</File>
     <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Fonts/Play.spritefont</File>
     <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Fonts/ScoreFont.spritefont</File>
@@ -23,6 +24,7 @@
     <File>C:/Users/hunte/source/repos/MonoGame/games/Invaders/Invaders/Content/Sprites/Projectile.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
